@@ -1,0 +1,96 @@
+<div class="grid-container">
+    <div *ngIf="vehiculos && maintenance === false">
+        <app-datatable [columns] = "Columns" [data]="vehiculos" [btnDelete]=true (DeleteEvent)="delete($event)"
+        (CreateEvent)="new($event)" url="vehiculo"></app-datatable> 
+    </div>
+    
+    <div *ngIf="maintenance === true">
+        <mat-card>
+            <div fxFlex = "5%" fxFlex.lt-md = "10%" class="back-maintenance">
+                <button matTooltip="Volver" mat-mini-fab color="primary" (click)="back()">
+                    atras
+                </button>
+                <div fxLayout="row">
+                    <div fxFlex = "100%" fxFlex.lt-md = "100%">
+                        <div class="title-maintenance"><h2 >Mantenimiento del vehiculo</h2></div>
+                    </div>
+                    
+                </div>
+                
+                <form fxLayout="column">
+                    <div class="input-row" fxLayout="row" fxLayout.lt-md="column">
+                        <mat-form-field fxFlex class="m-r-20">
+                            <mat-label>placa</mat-label>
+                            <input matInput [(ngModel)]="vehiculo.placa" name="placa" type="text" [disabled]="edit">
+                        </mat-form-field>
+              
+                        <mat-form-field fxFlex class="m-r-20">
+                            <mat-label>vin</mat-label>
+                            <input matInput [(ngModel)]="vehiculo.vin" name="vin" type="text">
+                        </mat-form-field>
+                    </div>
+              
+                    <div class="input-row" fxLayout="row" fxLayout.lt-md="column">
+                        <mat-form-field fxFlex class="m-r-20">
+                            <mat-label>linea</mat-label>
+                            <input matInput [(ngModel)]="vehiculo.linea" name="nombre" type="number">
+                        </mat-form-field>
+                        
+                        <mat-form-field fxFlex class="m-r-20">
+                            <mat-label>cilindrada</mat-label>
+                            <input matInput [(ngModel)]="vehiculo.cilindrada" name="cilindrada" type="number">
+                        </mat-form-field>
+                    </div>
+                    <div class="input-row" fxLayout="row" fxLayout.lt-md="column">
+                        <mat-form-field fxFlex class="m-r-20">
+                            <mat-label>color</mat-label>
+                            <input matInput [(ngModel)]="vehiculo.color" name="color" type="text">
+                        </mat-form-field>
+                        
+                        <mat-form-field fxFlex class="m-r-20">
+                            <mat-label>chasis</mat-label>
+                            <input matInput [(ngModel)]="vehiculo.chasis" name="chasis" type="text">
+                        </mat-form-field>
+    
+                    </div>
+                    <div class="input-row" fxLayout="row" fxLayout.lt-md="column">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Tipo</mat-label>
+                            <mat-select (selectionChange)="change($event)" [(value)]="vehiculo.tipo">
+                              <mat-option *ngFor="let tipo of tipos" [value]="tipo.id">
+                                {{tipo.tipo}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field appearance="fill">
+                            <mat-label>Marca</mat-label>
+                            <mat-select (selectionChange)="change($event)" [(value)]="vehiculo.marca">
+                              <mat-option *ngFor="let marca of marcas" [value]="marca.id">
+                                {{marca.marca}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+                    <div class="input-row" fxLayout="row" fxLayout.lt-md="column">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Modelo</mat-label>
+                            <mat-select [disabled]="disabledmodelo" [(value)]="vehiculo.modelo">
+                              <mat-option *ngFor="let modelo of modelos" [value]="modelo.id">
+                                {{modelo.modelo}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+                    <div class="buttons-maintenance" *ngIf="maintenance && edit === false">
+                        <button mat-raised-button color="primary" matTooltip="Guardar"
+                          (click)="save()">Guardar</button>
+                    </div>
+                    <div class="buttons-maintenance" *ngIf="edit && maintenance">
+                        <button mat-raised-button color="primary" matTooltip="Actualizar"
+                          (click)="update()">Actualizar</button>
+                    </div>           
+                </form>
+            </div>
+        </mat-card>
+    </div>
+</div>

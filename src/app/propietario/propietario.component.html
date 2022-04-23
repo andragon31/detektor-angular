@@ -1,0 +1,107 @@
+<div class="grid-container">
+    <div *ngIf="propietarios && maintenance === false">
+        <app-datatable [columns] = "Columns" [data]="propietarios" [btnCreate]=false (DeleteEvent)="delete($event)"
+        (CreateEvent)="new($event)" url="propietario"></app-datatable> 
+    </div>
+    
+    <div *ngIf="propietario && maintenance === true">
+        <mat-card>
+            <div fxFlex = "5%" fxFlex.lt-md = "10%" class="back-maintenance">
+                <button matTooltip="Volver" mat-mini-fab color="primary" (click)="back()">
+                    atras
+                </button>
+               
+            </div>
+            <mat-tab-group>
+                <mat-tab label="Datos del propietario">
+                    <div fxLayout="row">
+                        <div fxFlex = "100%" fxFlex.lt-md = "100%">
+                            <div class="title-maintenance"><h2 >Mantenimiento de propietarios</h2></div>
+                        </div>
+                        
+                    </div>
+                    
+                    <form fxLayout="column">
+                        <div class="input-row" fxLayout="row" fxLayout.lt-md="column">
+                            <mat-form-field fxFlex class="m-r-20">
+                                <mat-label>identificacion</mat-label>
+                                <input matInput disabled [(ngModel)]="propietario.identificacion" name="identificacion" type="text">
+                            </mat-form-field>
+                  
+                            <mat-form-field fxFlex class="m-r-20">
+                                <mat-label>correo electrónico</mat-label>
+                                <input matInput disabled [(ngModel)]="propietario.email" name="email" type="text">
+                            </mat-form-field>
+                        </div>
+                  
+                        <div class="input-row" fxLayout="row" fxLayout.lt-md="column">
+                            <mat-form-field fxFlex class="m-r-20">
+                                <mat-label>Nombre</mat-label>
+                                <input matInput disabled [(ngModel)]="propietario.nombre" name="nombre" type="text">
+                            </mat-form-field>
+                            
+                            <mat-form-field fxFlex class="m-r-20">
+                                <mat-label>Apellido</mat-label>
+                                <input matInput disabled [(ngModel)]="propietario.apellido" name="apellido" type="text">
+                            </mat-form-field>
+                        </div>
+                        <div class="input-row" fxLayout="row" fxLayout.lt-md="column">
+                            <mat-form-field fxFlex class="m-r-20">
+                                <mat-label>Fecha de nacimiento</mat-label>
+                                <input matInput disabled [(ngModel)]="propietario.fecha_nacimiento" name="fecha_nacimiento" type="text">
+                            </mat-form-field>
+                            
+                            <mat-form-field fxFlex class="m-r-20">
+                                <mat-label>Direccion</mat-label>
+                                <input matInput disabled [(ngModel)]="propietario.direccion" name="direccion" type="text">
+                            </mat-form-field>
+        
+                        </div>
+                        <div class="input-row" fxLayout="row" fxLayout.lt-md="column">
+                            <mat-form-field fxFlex class="m-r-20">
+                                <mat-label>Telefono</mat-label>
+                                <input matInput disabled [(ngModel)]="propietario.telefono" name="telefono" type="text">
+                            </mat-form-field>
+                        </div>
+                    </form>
+                </mat-tab>
+                <mat-tab label="Asignar vehiculos">
+                    <div class="example-container">
+                        <h2>Vehiculos no asignados</h2>
+                      
+                        <div
+                          cdkDropList
+                          #todoList="cdkDropList"
+                          [cdkDropListData]="vehiculosnoprop"
+                          [cdkDropListConnectedTo]="[doneList]"
+                          class="example-list"
+                          (cdkDropListDropped)="drop($event)">
+                          <div class="example-box" *ngFor="let item of vehiculosnoprop" cdkDrag>{{item.placa}}</div>
+                        </div>
+                    </div>
+                      
+                    <div class="example-container">
+                        <h2>Vehiculos asignados</h2>
+                      
+                        <div
+                          cdkDropList
+                          #doneList="cdkDropList"
+                          [cdkDropListData]="vehiculosprop"
+                          [cdkDropListConnectedTo]="[todoList]"
+                          class="example-list"
+                          (cdkDropListDropped)="drop($event)">
+                          <div class="example-box" *ngFor="let item of vehiculosprop" cdkDrag>{{item.placa}}</div>
+                        </div>
+                    </div>
+                    <div class="buttons-maintenance">
+                        <button mat-raised-button color="primary" matTooltip="Guardar"
+                          (click)="save()">Guardar</button>
+                    </div>                      
+                </mat-tab>
+            </mat-tab-group>
+              
+            
+        </mat-card>
+
+    </div>
+</div>
